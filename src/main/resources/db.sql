@@ -46,7 +46,7 @@ ADD CONSTRAINT FK_Author_Constraint
 FOREIGN KEY(author_id) REFERENCES AUTHOR(id);
 
 ALTER table BOOK
-RENAME COLUMN published_year TO publishedYear;
+RENAME COLUMN published_year TO published_year;
 
 -----------------------------INSERT ---------------------------------------------------------------------------
 
@@ -321,104 +321,104 @@ INSERT INTO user (id, name, email) VALUES (47, 'Seth Avery', 'hutchinsonbrian@ho
 INSERT INTO user (id, name, email) VALUES (48, 'Angelica Wilson', 'matthewpadilla@malone.com');
 INSERT INTO user (id, name, email) VALUES (49, 'Ryan Diaz', 'dblack@barrett.com');
 INSERT INTO user (id, name, email) VALUES (50, 'Dwayne Caldwell', 'allendennis@dunn.com');
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (1, 'Bill quite security
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (1, 'Bill quite security
 someone', '978-0-7425-6944-7', 2012, 18, 46);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (2, 'Administration woman gas
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (2, 'Administration woman gas
 owner', '978-1-210-05710-7', 2016, 32, 8);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (3, 'Require return',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (3, 'Require return',
 '978-1-59467-813-4', 2003, 44, 32);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (4, 'Thousand as box',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (4, 'Thousand as box',
 '978-0-390-48139-9', 2001, 41, 34);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (5, 'Alone table call',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (5, 'Alone table call',
 '978-0-676-89857-6', 2003, 29, 27);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (6, 'Respond camera
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (6, 'Respond camera
 participant', '978-1-379-87137-8', 2010, 20, 46);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (7, 'Manage experience
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (7, 'Manage experience
 activity to', '978-0-7340-7453-9', 2023, 26, 27);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (8, 'Hair leave least',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (8, 'Hair leave least',
 '978-0-8132-9726-2', 2025, 9, 5);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (9, 'Fund military common
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (9, 'Fund military common
 ok', '978-0-89371-779-7', 2001, 48, 1);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (10, 'Main end',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (10, 'Main end',
 '978-1-08-503208-7', 2008, 37, 26);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (11, 'Race send sell',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (11, 'Race send sell',
 '978-1-160-94087-0', 2012, 9, 42);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (12, 'Entire know',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (12, 'Entire know',
 '978-1-398-85199-3', 1999, 9, 44);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (13, 'My someone size floor
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (13, 'My someone size floor
 law', '978-0-16-100863-3', 2006, 46, 24);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (14, 'View follow important',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (14, 'View follow important',
 '978-1-72860-190-8', 2004, 18, 2);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (15, 'Offer agency wrong',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (15, 'Offer agency wrong',
 '978-0-909597-16-0', 2010, 38, 6);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (16, 'Picture specific
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (16, 'Picture specific
 college to', '978-1-84146-413-8', 2023, 24, 37);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (17, 'International send much
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (17, 'International send much
 them', '978-0-88026-591-1', 1991, 7, 10);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (18, 'Rest another medical
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (18, 'Rest another medical
 south upon', '978-0-314-23227-4', 1990, 3, 45);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (19, 'Together color their',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (19, 'Together color their',
 '978-0-501-70067-8', 2014, 10, 20);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (20, 'Best skill can section
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (20, 'Best skill can section
 write', '978-1-75771-112-8', 1992, 7, 50);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (21, 'With nature',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (21, 'With nature',
 '978-0-08-077810-5', 2013, 5, 7);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (22, 'Safe door hear prove
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (22, 'Safe door hear prove
 could', '978-0-7917-2779-9', 2002, 2, 19);
 
 
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (23, 'Minute way',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (23, 'Minute way',
 '978-1-4809-9311-2', 1994, 16, 41);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (24, 'Law energy total',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (24, 'Law energy total',
 '978-1-84404-848-9', 2017, 17, 39);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (25, 'Seem change oil',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (25, 'Seem change oil',
 '978-0-462-22547-0', 2007, 15, 32);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (26, 'Develop current
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (26, 'Develop current
 author', '978-1-4712-3872-7', 1991, 20, 6);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (27, 'Whatever court consumer
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (27, 'Whatever court consumer
 notice stuff', '978-1-72220-915-5', 2014, 20, 17);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (28, 'Election best',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (28, 'Election best',
 '978-0-00-483496-2', 2008, 5, 14);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (29, 'Share benefit',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (29, 'Share benefit',
 '978-1-63110-658-3', 2014, 15, 1);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (30, 'Ten administration job
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (30, 'Ten administration job
 among statement', '978-0-381-43482-3', 1993, 4, 11);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (31, 'Year certainly
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (31, 'Year certainly
 direction your not', '978-1-5039-1205-2', 2003, 38, 33);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (32, 'Energy guess never',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (32, 'Energy guess never',
 '978-0-7852-8942-5', 2010, 15, 31);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (33, 'Scientist evening
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (33, 'Scientist evening
 painting in include', '978-1-64850-835-6', 1997, 31, 1);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (34, 'Particular major
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (34, 'Particular major
 parent', '978-0-353-56485-5', 2021, 47, 36);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (35, 'Budget lose easy manage
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (35, 'Budget lose easy manage
 plan', '978-1-374-75774-5', 2016, 16, 2);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (36, 'Ground development
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (36, 'Ground development
 everyone tree', '978-1-63134-193-9', 2014, 26, 15);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (37, 'Environment analysis',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (37, 'Environment analysis',
 '978-1-07-243513-6', 1995, 18, 41);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (38, 'Medical church argue
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (38, 'Medical church argue
 group about', '978-0-371-80237-3', 1996, 49, 34);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (39, 'Herself shake whole',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (39, 'Herself shake whole',
 '978-1-68307-493-9', 1991, 33, 17);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (40, 'Could head play
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (40, 'Could head play
 participant', '978-1-239-22490-0', 2017, 8, 20);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (41, 'Then natural movement
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (41, 'Then natural movement
 yard suddenly', '978-0-04-266261-9', 1991, 10, 29);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (42, 'Skill culture explain
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (42, 'Skill culture explain
 so', '978-0-551-15386-8', 1993, 14, 9);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (43, 'Drive let anything
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (43, 'Drive let anything
 face', '978-1-65705-570-4', 2016, 6, 47);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (44, 'Inside prepare',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (44, 'Inside prepare',
 '978-0-676-83946-3', 2024, 7, 40);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (45, 'Among job live',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (45, 'Among job live',
 '978-1-110-99134-1', 2004, 2, 22);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (46, 'Himself cut',
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (46, 'Himself cut',
 '978-0-263-07242-6', 1999, 5, 6);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (47, 'Same voice nation fine
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (47, 'Same voice nation fine
 woman', '978-0-913118-88-7', 1997, 22, 20);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (48, 'Court wait traditional', '978-0-313-44637-5', 2023, 41, 44);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (49, 'Newspaper affect
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (48, 'Court wait traditional', '978-0-313-44637-5', 2023, 41, 44);
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (49, 'Newspaper affect
 concern item', '978-0-636-85811-4', 2024, 3, 29);
-INSERT INTO book (id, title, isbn, publishedYear, author_id, publisher_id) VALUES (50, 'Everything give
+INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (50, 'Everything give
 record', '978-1-62457-711-6', 2004, 40, 10);
