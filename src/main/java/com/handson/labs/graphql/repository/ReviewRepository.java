@@ -15,5 +15,5 @@ public interface ReviewRepository extends CrudRepository<Review, Integer>, Pagin
 
     public Review findReviewByUserId(Integer userId);
 
-    public List<Review> findAllReviewsByUserIdIn(java.util.List<Integer> userIds);
+    public List<Review> findAllByUserIdIn(List<Integer> userIds);
 }

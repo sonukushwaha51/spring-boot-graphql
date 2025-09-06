@@ -6,21 +6,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name = "review")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Review {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.SEQUENCE)
     private int id;
 
     private int rating;
-    private String comments;
+
+    @Column(name = "comments")
+    private String comment;
 
     @Column(name = "user_id")
     private int userId;

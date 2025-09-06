@@ -33,9 +33,10 @@ public class ReviewController {
                     .bookId(review.getBookId())
                     .userId(review.getUserId())
                     .rating(review.getRating())
-                    .comments(review.getComment())
+                    .comment(review.getComment())
                     .build());
         } catch (Exception e) {
+            e.printStackTrace();
             return UpdateResponse.builder()
                     .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                     .message("Error creating/updating review: " + e.getMessage())

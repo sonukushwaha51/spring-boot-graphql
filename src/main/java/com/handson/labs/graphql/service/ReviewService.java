@@ -39,7 +39,7 @@ public class ReviewService {
     }
 
     public List<Review> getReviewsByUserId(List<Integer> userIds) {
-        return reviewRepository.findAllReviewsByUserIdIn(userIds);
+        return reviewRepository.findAllByUserIdIn(userIds);
     }
     public List<Review> getAllReviewsByIds(List<Integer> ids) {
         return (List<Review>) reviewRepository.findAllById(ids);
