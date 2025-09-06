@@ -1,11 +1,13 @@
 package com.handson.labs.graphql.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name="book")
 @Data
+@Builder
 public class Book {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

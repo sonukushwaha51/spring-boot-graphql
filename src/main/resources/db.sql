@@ -26,6 +26,23 @@ CREATE TABLE USER(
 	PRIMARY KEY(id)
 );
 
+CREATE TABLE REVIEW(
+	id INTEGER,
+	rating INTEGER,
+	comments VARCHAR(100),
+	user_id INTEGER REFERENCES USER(id),
+	book_id INTEGER REFERENCES BOOK(id),
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE ORDERS(
+	id INTEGER,
+	user_id INTEGER REFERENCES USER(id),
+	book_id INTEGER REFERENCES BOOK(id),
+	order_date DATE,
+	PRIMARY KEY(id)
+);
+
 CREATE TABLE BOOK(
 	id INTEGER,
 	title VARCHAR(100),
@@ -35,6 +52,14 @@ CREATE TABLE BOOK(
 	publisher_id INTEGER,
 	PRIMARY KEY(id)
 );
+
+ALTER TABLE ORDERS
+ADD CONSTRAINT FK_User_Constraint
+FOREIGN KEY(user_id) REFERENCES USER(id);
+
+ALTER TABLE ORDERS
+ADD CONSTRAINT FK_Book_Constraint
+FOREIGN KEY(book_id) REFERENCES BOOK(id);
 
 ALTER TABLE BOOK
 ADD CONSTRAINT FK_Constraint
@@ -422,3 +447,21 @@ INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALU
 concern item', '978-0-636-85811-4', 2024, 3, 29);
 INSERT INTO book (id, title, isbn, published_year, author_id, publisher_id) VALUES (50, 'Everything give
 record', '978-1-62457-711-6', 2004, 40, 10);
+
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (1, 5, 'Great book!', 1, 1);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (2, 4, 'Enjoyed reading it.', 2, 1);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (3, 3, 'It was okay.', 3, 1);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (4, 5, 'Loved it!', 4, 2);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (5, 4, 'Very informative.', 5, 2);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (6, 2, 'Not my cup of tea.', 6, 2);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (7, 5, 'A must-read!', 7, 3);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (8, 4, 'Well written.', 8, 3);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (9, 3, 'Average story.', 9, 3);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (10, 5, 'Fantastic!', 10, 4);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (11, 4, 'Good read.', 11, 4);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (12, 2, 'Could be better.', 12, 4);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (13, 5, 'Highly recommend!', 13, 5);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (14, 4, 'Interesting plot.', 14, 5);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (15, 3, 'It was fine.', 15, 5);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (16, 5, 'Brilliant!', 16, 6);
+INSERT into REVIEW (id, rating, comments, user_id, book_id) VALUES (17, 4, 'Enjoyable.', 17, 6);
