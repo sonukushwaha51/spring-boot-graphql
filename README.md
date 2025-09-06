@@ -19,6 +19,14 @@
     }
 }`
 
+`mutation MyMutation {
+  createReview(review: {id: 102, rating: 5, userId: 10, bookId: 10, comment: "Liked it"}) {
+    message
+    status
+    timestamp
+  }
+}`
+
 # Git flow Maven plugin
 
 `git checkout develop`

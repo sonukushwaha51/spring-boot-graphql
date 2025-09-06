@@ -11,4 +11,6 @@ import java.util.List;
 public interface BookRepository extends CrudRepository<Book, Integer>, PagingAndSortingRepository<Book, Integer> {
 
     public List<Book> findAllByAuthorIdIn(List<Integer> ids);
+
+    public Book findByAuthorId(Integer authorId);
 }
