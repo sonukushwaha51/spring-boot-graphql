@@ -44,3 +44,19 @@
 # Select release version and then
 
 `mvn gitflow:release-finish`
+
+
+# Start redis in local from CLI
+`Install redis server`
+
+`redis-server`
+
+`redis-cli`
+
+# Read from redis
+
+`GET <keyName>`
+
+# Delete all from Redis
+
+`FLUSHALL`

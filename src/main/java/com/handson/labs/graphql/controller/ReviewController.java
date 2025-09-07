@@ -22,7 +22,7 @@ public class ReviewController {
 
     @SchemaMapping(typeName = "Library", field = "reviews")
     public List<Review> getAllReviews(@Argument List<Integer> ids) {
-        return reviewService.getAllReviewsByIds(ids);
+        return reviewService.getfromCacheOrClientCall(ids);
     }
 
     @MutationMapping(name = "createReview")

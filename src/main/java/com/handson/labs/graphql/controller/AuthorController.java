@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -32,13 +33,13 @@ public class AuthorController {
 
     @SchemaMapping(typeName = "Library", field = "authors")
     public List<Author> authors(@Argument List<Integer> ids) {
-        return authorService.getAllAuthors(ids);
+        return authorService.getfromCacheOrClientCall(ids);
     }
 
     @BatchMapping(typeName = "Author", field = "books")
     public Map<Author, List<Book>> booksByAuthors(List<Author> authors) {
         List<Integer> ids = authors.stream().map(Author::getId).toList();
-        List<Book> books =  bookService.getAllBooksByAuthorIds(ids);
+        List<Book> books =  bookService.getResultByParentIds(ids, "authors");
 
         return authors.stream()
                 .collect(Collectors.toMap(
@@ -47,6 +48,11 @@ public class AuthorController {
                                 .filter(book -> book.getAuthorId() == author.getId())
                                 .toList()
                 ));
+    }
+
+    @QueryMapping
+    public Author authorById(@Argument Integer id) {
+        return authorService.getFromCacheOrClientCall(id);
     }
 
     @MutationMapping(name = "updateAuthors")

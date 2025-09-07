@@ -1,5 +1,6 @@
 package com.handson.labs.graphql.service;
 
+import com.handson.labs.graphql.configuration.LibraryCache;
 import com.handson.labs.graphql.entity.Author;
 import com.handson.labs.graphql.entity.upsert.model.AuthorUpdate;
 import com.handson.labs.graphql.repository.AuthorRepository;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +17,11 @@ import java.util.List;
 @Service
 @Slf4j
 @Getter
-public class AuthorService {
+public class AuthorService extends RedisCacheService<Author> {
+
+    public AuthorService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate,LibraryCache.AUTHORS, Author.class);
+    }
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -46,6 +52,12 @@ public class AuthorService {
                 .name(authorUpdate.getName())
                 .bio(authorUpdate.getBio())
                 .build();
+    }
+
+    @Override
+    protected List<Author> getAllFromClient(List<Integer> ids) {
+        log.info("Fetching authors from DB for Ids : {}", ids);
+        return getAllAuthors(ids);
     }
 
 }

@@ -26,13 +26,13 @@ public class UserController {
 
     @SchemaMapping(typeName = "Library", field = "users")
     public List<User> users(@Argument List<Integer> ids) {
-        return userService.getAllUsers(ids);
+        return userService.getfromCacheOrClientCall(ids);
     }
 
     @BatchMapping(typeName = "User", field = "reviewsByUserIds")
     public Map<User, List<Review>> reviewsByUsers(List<User> users) {
         List<Integer> userIds = users.stream().map(User::getId).toList();
-        List<Review> reviews = reviewService.getReviewsByUserId(userIds);
+        List<Review> reviews = reviewService.getResultByParentIds(userIds, "users");
 
         return users.stream()
                 .collect(Collectors.toMap(
