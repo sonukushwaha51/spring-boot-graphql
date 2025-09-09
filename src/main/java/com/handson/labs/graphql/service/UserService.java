@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserService extends RedisCacheService<User> {
 
-    public UserService(RedisTemplate<String, Object> redisTemplate) {
-        super(redisTemplate, LibraryCache.USERS, User.class);
+    public UserService(RedisTemplate<String, User> userRedisTemplate) {
+        super(userRedisTemplate, LibraryCache.USERS);
     }
 
     @Autowired
@@ -43,6 +43,11 @@ public class UserService extends RedisCacheService<User> {
     protected List<User> getAllFromClient(List<Integer> ids) {
         log.info("Fetching users from DB for Ids : {}", ids);
         return getAllUsers(ids);
+    }
+
+    @Override
+    protected Integer getId(User entity) {
+        return entity.getId();
     }
 
 }

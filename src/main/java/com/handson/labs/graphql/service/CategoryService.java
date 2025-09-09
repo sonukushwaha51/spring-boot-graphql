@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CategoryService extends RedisCacheService<Category> {
 
-    public CategoryService(RedisTemplate<String, Object> redisTemplate) {
-        super(redisTemplate, LibraryCache.CATEGORIES, Category.class);
+    public CategoryService(RedisTemplate<String, Category> categoryRedisTemplate) {
+        super(categoryRedisTemplate, LibraryCache.CATEGORIES);
     }
 
     @Autowired
@@ -47,6 +47,11 @@ public class CategoryService extends RedisCacheService<Category> {
     protected List<Category> getAllFromClient(List<Integer> ids) {
         log.info("Fetching categories from DB for Ids : {}", ids);
         return getAllCategories(ids);
+    }
+
+    @Override
+    protected Integer getId(Category entity) {
+        return entity.getId();  
     }
 
 }

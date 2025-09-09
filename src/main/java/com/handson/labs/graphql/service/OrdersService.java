@@ -17,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrdersService extends RedisCacheService<Orders> {
 
-    public OrdersService(RedisTemplate<String, Object> redisTemplate) {
-        super(redisTemplate, LibraryCache.ORDERS, Orders.class);
+    public OrdersService(RedisTemplate<String, Orders> ordersRedisTemplate) {
+        super(ordersRedisTemplate, LibraryCache.ORDERS);
     }
 
     @Autowired
@@ -55,6 +55,11 @@ public class OrdersService extends RedisCacheService<Orders> {
     protected List<Orders> getAllFromClient(List<Integer> ids) {
         log.info("Fetching orders from DB for Ids : {}", ids);
         return getAllOrdersByIds(ids);
+    }
+
+    @Override
+    protected Integer getId(Orders entity) {
+        return entity.getId();
     }
 
 }

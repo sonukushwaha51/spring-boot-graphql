@@ -1,12 +1,13 @@
 package com.handson.labs.graphql.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
 import com.handson.labs.graphql.configuration.LibraryCache;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,30 +16,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class RedisCacheService<T> {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, T> redisTemplate;
 
     private final LibraryCache libraryCache;
-
-    private final Class<T> typeParameterClass;
 
     @Value("${spring.redis.ttl}")
     private Long ttl;
 
-    public RedisCacheService(RedisTemplate<String, Object> redisTemplate, LibraryCache libraryCache, Class<T> typeParameterClass) {
+    public RedisCacheService(RedisTemplate<String, T> redisTemplate, LibraryCache libraryCache) {
         this.redisTemplate = redisTemplate;
         this.libraryCache = libraryCache;
-        this.typeParameterClass = typeParameterClass;
+        log.info("Injected RedisTemplate bean: {}", redisTemplate.getClass().getName());
+        log.info("isEnableDefaultSerializer: {}", redisTemplate.isEnableDefaultSerializer());
+        log.info("Value serializer: {}", redisTemplate.getValueSerializer().getClass().getName());
     }
 
     public List<T> getfromCacheOrClientCall(List<Integer> keysList) {
-        List<T> fetchedResult = new ArrayList<>();
+        Map<Integer, T> fetchedResult = new LinkedHashMap<>();
         List<Integer> fetchResultsFromClientKeys = new ArrayList<>();
         for (Integer key : keysList) {
-            log.info("Redis value serializer class : {}", redisTemplate.getValueSerializer().getClass().getName());
-            T cachedValue = typeParameterClass.cast(redisTemplate.opsForValue().get(generateKey(libraryCache, key)));
+            T cachedValue = readFromCache(key);
             if (cachedValue != null) {
                 log.info("Cache hit for key : {} for Object: {}", key, getClass().getSimpleName().replace("Service", ""));
-                fetchedResult.add(cachedValue);
+                fetchedResult.put(key, cachedValue);
             } else {
                 fetchResultsFromClientKeys.add(key);
             }
@@ -47,11 +47,15 @@ public abstract class RedisCacheService<T> {
         // Fetch from client for missing keys
         List<T> clientResultList = getAllFromClient(fetchResultsFromClientKeys);
 
-        // Store fetched values in cache
-        storeFetchedValuesInCache(fetchResultsFromClientKeys, clientResultList);
+        for (T entity : clientResultList) {
+            Integer id = getId(entity);
+            fetchedResult.put(id, entity);
 
-        fetchedResult.addAll(clientResultList);
-        return fetchedResult;
+            // Store fetched values in cache
+            writeToCache(entity, id);
+        }
+
+        return fetchedResult.values().stream().toList();
     }
 
     public String generateKey(LibraryCache libraryCache, Integer id) {
@@ -60,13 +64,12 @@ public abstract class RedisCacheService<T> {
 
     protected void storeFetchedValuesInCache(List<Integer> keys, List<T> values) {
         for (int key = 0; key < keys.size(); key++) {
-            log.info("Redis value serializer class : {}", redisTemplate.getValueSerializer().getClass().getName());
-            redisTemplate.opsForValue().set(generateKey(libraryCache, keys.get(key)), values.get(key), ttl);
+            writeToCache(values.get(key), keys.get(key));
         }
     }
 
     public T getFromCacheOrClientCall(Integer id) {
-        T cachedValue = typeParameterClass.cast(redisTemplate.opsForValue().get(generateKey(libraryCache, id)));
+        T cachedValue = readFromCache(id);
         if (cachedValue != null) {
             log.info("Cache hit for key : {} for Object: {}", id, getClass().getSimpleName().replace("Service", ""));
             return cachedValue;
@@ -75,7 +78,7 @@ public abstract class RedisCacheService<T> {
             ids.add(id);
             List<T> clientResultList = getAllFromClient(ids);
             if (!clientResultList.isEmpty()) {
-                redisTemplate.opsForValue().set(generateKey(libraryCache, id), clientResultList.get(0), ttl);
+                writeToCache(clientResultList.get(0), id);
                 return clientResultList.get(0);
             } else {
                 return null;
@@ -88,5 +91,20 @@ public abstract class RedisCacheService<T> {
     }
 
     protected abstract List<T> getAllFromClient(List<Integer> ids);
+
+    private T readFromCache(Integer id) {
+        T cachedValue = redisTemplate.opsForValue().get(generateKey(libraryCache, id));
+        if (cachedValue != null) {
+            log.info("Cache hit for key : {} for Object: {}", id, getClass().getSimpleName().replace("Service", ""));
+        }
+        return cachedValue;
+    }
+
+    private void writeToCache(T value, Integer id) {
+        log.info("Writing to cache for key : {} for Object: {} value: {}", id, getClass().getSimpleName().replace("Service", ""), value);
+        redisTemplate.opsForValue().set(generateKey(libraryCache, id), value, ttl);
+    }
+
+    protected abstract Integer getId(T entity);
 
 }

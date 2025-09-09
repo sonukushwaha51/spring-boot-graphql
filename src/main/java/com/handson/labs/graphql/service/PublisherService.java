@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PublisherService extends RedisCacheService<Publisher> {
 
-    public PublisherService(RedisTemplate<String, Object> redisTemplate) {
-        super(redisTemplate, LibraryCache.PUBLISHERS, Publisher.class);
+    public PublisherService(RedisTemplate<String, Publisher> publisherRedisTemplate) {
+        super(publisherRedisTemplate, LibraryCache.PUBLISHERS);
     }
 
     @Autowired
@@ -58,6 +58,11 @@ public class PublisherService extends RedisCacheService<Publisher> {
     protected List<Publisher> getAllFromClient(List<Integer> ids) {
         log.info("Fetching publishers from DB for Ids : {}", ids);
         return getAllPublishers(ids);
+    }
+
+    @Override
+    protected Integer getId(Publisher entity) {
+        return entity.getId();
     }
 
 }

@@ -19,8 +19,8 @@ import java.util.List;
 @Getter
 public class AuthorService extends RedisCacheService<Author> {
 
-    public AuthorService(RedisTemplate<String, Object> redisTemplate) {
-        super(redisTemplate,LibraryCache.AUTHORS, Author.class);
+    public AuthorService(RedisTemplate<String, Author> authorRedisTemplate) {
+        super(authorRedisTemplate, LibraryCache.AUTHORS);
     }
 
     @Autowired
@@ -58,6 +58,11 @@ public class AuthorService extends RedisCacheService<Author> {
     protected List<Author> getAllFromClient(List<Integer> ids) {
         log.info("Fetching authors from DB for Ids : {}", ids);
         return getAllAuthors(ids);
+    }
+
+    @Override
+    protected Integer getId(Author entity) {
+        return entity.getId();
     }
 
 }
