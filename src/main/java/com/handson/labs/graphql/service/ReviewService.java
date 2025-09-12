@@ -17,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReviewService extends RedisCacheService<Review> {
 
-    public ReviewService(RedisTemplate<String, Review> reviewRedisTemplate) {
-        super(reviewRedisTemplate, LibraryCache.REVIEWS);
+    public ReviewService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate, LibraryCache.REVIEWS, Review.class);
     }
 
     @Autowired

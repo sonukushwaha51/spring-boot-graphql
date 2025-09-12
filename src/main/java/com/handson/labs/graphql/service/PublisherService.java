@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PublisherService extends RedisCacheService<Publisher> {
 
-    public PublisherService(RedisTemplate<String, Publisher> publisherRedisTemplate) {
-        super(publisherRedisTemplate, LibraryCache.PUBLISHERS);
+    public PublisherService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate, LibraryCache.PUBLISHERS, Publisher.class);
     }
 
     @Autowired

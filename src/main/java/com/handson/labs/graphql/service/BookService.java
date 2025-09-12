@@ -23,8 +23,8 @@ public class BookService extends RedisCacheService<Book> {
     @Autowired
     private BookRepository bookRepository;
 
-    public BookService(RedisTemplate<String, Book> bookRedisTemplate) {
-        super(bookRedisTemplate,LibraryCache.BOOKS);
+    public BookService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate,LibraryCache.BOOKS, Book.class);
     }
 
     public List<Book> getAllBooks() {

@@ -19,8 +19,8 @@ import java.util.List;
 @Getter
 public class AuthorService extends RedisCacheService<Author> {
 
-    public AuthorService(RedisTemplate<String, Author> authorRedisTemplate) {
-        super(authorRedisTemplate, LibraryCache.AUTHORS);
+    public AuthorService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate, LibraryCache.AUTHORS, Author.class);
     }
 
     @Autowired

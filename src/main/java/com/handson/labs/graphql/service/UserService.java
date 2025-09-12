@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserService extends RedisCacheService<User> {
 
-    public UserService(RedisTemplate<String, User> userRedisTemplate) {
-        super(userRedisTemplate, LibraryCache.USERS);
+    public UserService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate, LibraryCache.USERS, User.class);
     }
 
     @Autowired

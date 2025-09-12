@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CategoryService extends RedisCacheService<Category> {
 
-    public CategoryService(RedisTemplate<String, Category> categoryRedisTemplate) {
-        super(categoryRedisTemplate, LibraryCache.CATEGORIES);
+    public CategoryService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate, LibraryCache.CATEGORIES, Category.class);
     }
 
     @Autowired

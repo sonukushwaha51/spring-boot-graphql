@@ -17,6 +17,7 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class AuthorController {
 
     @SchemaMapping(typeName = "Library", field = "authors")
     public List<Author> authors(@Argument List<Integer> ids) {
-        return authorService.getfromCacheOrClientCall(ids);
+        return new ArrayList<>(authorService.getfromCacheOrClientCall(ids));
     }
 
     @BatchMapping(typeName = "Author", field = "books")
@@ -46,7 +47,7 @@ public class AuthorController {
                         author -> author,
                         author -> books.stream()
                                 .filter(book -> book.getAuthorId() == author.getId())
-                                .toList()
+                                .collect(Collectors.toList())
                 ));
     }
 

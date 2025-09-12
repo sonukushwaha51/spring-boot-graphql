@@ -1,5 +1,6 @@
 package com.handson.labs.graphql.service;
 
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,16 +17,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class RedisCacheService<T> {
 
-    private final RedisTemplate<String, T> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     private final LibraryCache libraryCache;
+
+    private final Class<T> typeClass;
 
     @Value("${spring.redis.ttl}")
     private Long ttl;
 
-    public RedisCacheService(RedisTemplate<String, T> redisTemplate, LibraryCache libraryCache) {
+    public RedisCacheService(RedisTemplate<String, Object> redisTemplate, LibraryCache libraryCache, Class<T> typeClass) {
         this.redisTemplate = redisTemplate;
         this.libraryCache = libraryCache;
+        this.typeClass = typeClass;
     }
 
     public List<T> getfromCacheOrClientCall(List<Integer> keysList) {
@@ -90,7 +94,7 @@ public abstract class RedisCacheService<T> {
     protected abstract List<T> getAllFromClient(List<Integer> ids);
 
     private T readFromCache(Integer id) {
-        T cachedValue = redisTemplate.opsForValue().get(generateKey(libraryCache, id));
+        T cachedValue = typeClass.cast(redisTemplate.opsForValue().get(generateKey(libraryCache, id)));
         if (cachedValue != null) {
             log.info("Cache hit for key : {}", generateKey(libraryCache, id));
         }
