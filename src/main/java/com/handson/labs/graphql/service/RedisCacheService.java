@@ -26,9 +26,6 @@ public abstract class RedisCacheService<T> {
     public RedisCacheService(RedisTemplate<String, T> redisTemplate, LibraryCache libraryCache) {
         this.redisTemplate = redisTemplate;
         this.libraryCache = libraryCache;
-        log.info("Injected RedisTemplate bean: {}", redisTemplate.getClass().getName());
-        log.info("isEnableDefaultSerializer: {}", redisTemplate.isEnableDefaultSerializer());
-        log.info("Value serializer: {}", redisTemplate.getValueSerializer().getClass().getName());
     }
 
     public List<T> getfromCacheOrClientCall(List<Integer> keysList) {
@@ -37,7 +34,7 @@ public abstract class RedisCacheService<T> {
         for (Integer key : keysList) {
             T cachedValue = readFromCache(key);
             if (cachedValue != null) {
-                log.info("Cache hit for key : {} for Object: {}", key, getClass().getSimpleName().replace("Service", ""));
+                log.info("Cache hit for key : {}", generateKey(libraryCache, key));
                 fetchedResult.put(key, cachedValue);
             } else {
                 fetchResultsFromClientKeys.add(key);
@@ -95,13 +92,13 @@ public abstract class RedisCacheService<T> {
     private T readFromCache(Integer id) {
         T cachedValue = redisTemplate.opsForValue().get(generateKey(libraryCache, id));
         if (cachedValue != null) {
-            log.info("Cache hit for key : {} for Object: {}", id, getClass().getSimpleName().replace("Service", ""));
+            log.info("Cache hit for key : {}", generateKey(libraryCache, id));
         }
         return cachedValue;
     }
 
     private void writeToCache(T value, Integer id) {
-        log.info("Writing to cache for key : {} for Object: {} value: {}", id, getClass().getSimpleName().replace("Service", ""), value);
+        log.info("Writing to cache for key : {}, value: {}", getId(value), value);
         redisTemplate.opsForValue().set(generateKey(libraryCache, id), value, ttl);
     }
 

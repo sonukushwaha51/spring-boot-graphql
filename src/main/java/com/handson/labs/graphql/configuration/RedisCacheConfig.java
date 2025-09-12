@@ -3,24 +3,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.handson.labs.graphql.entity.*;
 
 @Configuration
-public class RedisConfiguration {
+public class RedisCacheConfig {
 
     @Bean
     public RedisTemplate<String, Author> authorRedisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Author> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(RedisSerializer.string());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Author.class));
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setEnableDefaultSerializer(false);
+        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Author.class));
+        template.setDefaultSerializer(RedisSerializer.json());
         return template;
     }
 
@@ -29,10 +29,10 @@ public class RedisConfiguration {
         RedisTemplate<String, Book> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(RedisSerializer.string());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Book.class));
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setEnableDefaultSerializer(false);
+        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Book.class));
+        template.setDefaultSerializer(RedisSerializer.json());
         return template;
     }
 
@@ -41,9 +41,10 @@ public class RedisConfiguration {
         RedisTemplate<String, Publisher> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(RedisSerializer.string());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Publisher.class));
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Publisher.class));
+        template.setDefaultSerializer(RedisSerializer.json());
         return template;
     }
 
@@ -52,9 +53,10 @@ public class RedisConfiguration {
         RedisTemplate<String, User> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(RedisSerializer.string());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
+        template.setDefaultSerializer(RedisSerializer.json());
         return template;
     }
 
@@ -63,10 +65,10 @@ public class RedisConfiguration {
         RedisTemplate<String, Review> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(RedisSerializer.string());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Review.class));
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setEnableDefaultSerializer(false);
+        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Review.class));
+        template.setDefaultSerializer(RedisSerializer.json());
         return template;
     }
 
@@ -75,10 +77,10 @@ public class RedisConfiguration {
         RedisTemplate<String, Category> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(RedisSerializer.string());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Category.class));
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setEnableDefaultSerializer(false);
+        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Category.class));
+        template.setDefaultSerializer(RedisSerializer.json());
         return template;
     }
 
@@ -87,10 +89,9 @@ public class RedisConfiguration {
         RedisTemplate<String, Orders> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(RedisSerializer.string());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Orders.class));
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setEnableDefaultSerializer(false);
+        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Orders.class));
         return template;
     }
 
