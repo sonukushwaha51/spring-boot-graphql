@@ -30,16 +30,20 @@ public class AuthorService extends RedisCacheService<Author> {
         return (List<Author>) authorRepository.findAllById(ids);
     }
 
-    public Author getAuthorById(Integer id) {
+    @Override
+    public Author getResultByPrimaryIdentifier(int id) {
         return authorRepository.findById(id).orElse(null);
     }
 
     public List<Author> getAllAuthors() {
-        return (List<Author>) authorRepository.findAll();
+        List<Author> authors = (List<Author>) authorRepository.findAll();
+        writeToCache(authors);
+        return authors;
     }
 
     public void saveAuthor(Author author) {
         authorRepository.save(author);
+        writeToCache(author, author.getId());
     }
 
     public void deleteAuthorById(Integer id) {
@@ -55,7 +59,7 @@ public class AuthorService extends RedisCacheService<Author> {
     }
 
     @Override
-    protected List<Author> getAllFromClient(List<Integer> ids) {
+    protected List<Author> getClientResultFromClient(List<Integer> ids) {
         log.info("Fetching authors from DB for Ids : {}", ids);
         return getAllAuthors(ids);
     }

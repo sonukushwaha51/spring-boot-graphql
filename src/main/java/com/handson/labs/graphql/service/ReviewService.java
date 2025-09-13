@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.handson.labs.graphql.configuration.LibraryCache;
+import com.handson.labs.graphql.entity.Book;
 import com.handson.labs.graphql.entity.Review;
 import com.handson.labs.graphql.repository.ReviewRepository;
 
@@ -25,10 +26,13 @@ public class ReviewService extends RedisCacheService<Review> {
     private ReviewRepository reviewRepository;
 
     public List<Review> getAllReviews() {
-        return (List<Review>) reviewRepository.findAll();
+        List<Review> reviews = (List<Review>) reviewRepository.findAll();
+        writeToCache(reviews);
+        return reviews;
     }
 
-    public Review getReviewById(Integer id) {
+    @Override
+    public Review getResultByPrimaryIdentifier(int id) {
         return reviewRepository.findById(id).orElse(null);
     }
 
@@ -56,18 +60,15 @@ public class ReviewService extends RedisCacheService<Review> {
     }
 
     @Override
-    protected List<Review> getAllFromClient(List<Integer> ids) {
+    protected List<Review> getClientResultFromClient(List<Integer> ids) {
         log.info("Fetching reviews from DB for Ids : {}", ids);
         return getAllReviewsByIds(ids);
     }
 
     @Override
-    public List<Review> getResultByParentIds(List<Integer> ids, String parentFieldName) {
-        log.info("Fetching reviews from DB for {} Ids : {} ", parentFieldName, ids);
-        if (parentFieldName.equals("users")) {
-            return getReviewsByUserId(ids);
-        }
-        return new ArrayList<>();
+    public List<Review> getResultListFromParentIdFromClient(List<Integer> ids) {
+        log.info("Fetching books from DB for {} Ids : {} ", ids);
+        return getReviewsByUserId(ids);
     }
 
     @Override

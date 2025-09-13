@@ -32,13 +32,13 @@ public class OrdersController {
 
     @SchemaMapping(typeName = "Library", field = "orders")
     public List<Orders> orders(@Argument List<Integer> ids) {
-        return ordersService.getfromCacheOrClientCall(ids);
+        return ordersService.getClientResults(ids);
     }
 
     @BatchMapping(typeName = "Order", field = "user")
     public Map<Orders, User> userByOrders(List<Orders> orders) {
         List<Integer> userIds = orders.stream().map(Orders::getUserId).toList();
-        List<User> users = userService.getfromCacheOrClientCall(userIds);
+        List<User> users = userService.getClientResults(userIds);
 
         return orders.stream()
                 .collect(Collectors.toMap(

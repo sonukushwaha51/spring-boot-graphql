@@ -24,7 +24,8 @@ public class PublisherService extends RedisCacheService<Publisher> {
     @Autowired
     private PublisherRepository publisherRepository;
 
-    public Publisher getPublisherById(Integer id) {
+    @Override
+    public Publisher getResultByPrimaryIdentifier(int id) {
         return publisherRepository.findById(id).orElse(null);
     }
 
@@ -37,7 +38,9 @@ public class PublisherService extends RedisCacheService<Publisher> {
     }
 
     public List<Publisher> getAllPublishers() {
-        return (List<Publisher>) publisherRepository.findAll();
+        List<Publisher> publishers = (List<Publisher>) publisherRepository.findAll();
+        writeToCache(publishers);
+        return publishers;
     }
 
     public List<Publisher> getAllPublishers(List<Integer> ids) {
@@ -55,7 +58,7 @@ public class PublisherService extends RedisCacheService<Publisher> {
     }
 
     @Override
-    protected List<Publisher> getAllFromClient(List<Integer> ids) {
+    protected List<Publisher> getClientResultFromClient(List<Integer> ids) {
         log.info("Fetching publishers from DB for Ids : {}", ids);
         return getAllPublishers(ids);
     }

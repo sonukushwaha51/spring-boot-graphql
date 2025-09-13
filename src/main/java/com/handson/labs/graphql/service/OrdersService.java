@@ -2,6 +2,7 @@ package com.handson.labs.graphql.service;
 
 import java.util.List;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,13 @@ public class OrdersService extends RedisCacheService<Orders> {
     OrdersRepository ordersRepository;
 
     public List<Orders> getAllOrders() {
-        return (List<Orders>) ordersRepository.findAll();
+        List<Orders> orders = (List<Orders>) ordersRepository.findAll();
+        writeToCache(orders);
+        return orders;
     }
 
-    public Orders getOrderById(Integer id) {
+    @Override
+    public Orders getResultByPrimaryIdentifier(int id) {
         return ordersRepository.findById(id).orElse(null);
     }
 
@@ -52,7 +56,7 @@ public class OrdersService extends RedisCacheService<Orders> {
     }
 
     @Override
-    protected List<Orders> getAllFromClient(List<Integer> ids) {
+    protected List<Orders> getClientResultFromClient(List<Integer> ids) {
         log.info("Fetching orders from DB for Ids : {}", ids);
         return getAllOrdersByIds(ids);
     }

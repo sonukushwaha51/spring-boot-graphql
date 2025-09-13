@@ -27,7 +27,8 @@ public class UserService extends RedisCacheService<User> {
         return (List<User>) userRepository.findAllById(ids);
     }
 
-    public User getUserById(Integer id) {
+    @Override
+    public User getResultByPrimaryIdentifier(int id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -40,7 +41,7 @@ public class UserService extends RedisCacheService<User> {
     }
 
     @Override
-    protected List<User> getAllFromClient(List<Integer> ids) {
+    protected List<User> getClientResultFromClient(List<Integer> ids) {
         log.info("Fetching users from DB for Ids : {}", ids);
         return getAllUsers(ids);
     }

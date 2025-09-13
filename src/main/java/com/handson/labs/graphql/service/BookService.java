@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,8 +27,11 @@ public class BookService extends RedisCacheService<Book> {
     }
 
     public List<Book> getAllBooks() {
-        return (List<Book>) bookRepository.findAll();
+        List<Book> books = (List<Book>) bookRepository.findAll();
+        writeToCache(books);
+        return books;
     }
+        
 
     public List<Book> getAllBooksByIds(List<Integer> ids) {
         return (List<Book>) bookRepository.findAllById(ids);
@@ -39,12 +41,14 @@ public class BookService extends RedisCacheService<Book> {
         return (List<Book>) bookRepository.findAllByAuthorIdIn(ids);
     }
 
-    public Book getBookById(Integer id) {
+    @Override
+    public Book getResultByPrimaryIdentifier(int id) {
         return bookRepository.findById(id).orElse(null);
     }
 
     public void saveBook(Book book) throws Exception {
         bookRepository.save(book);
+        writeToCache(book, book.getId());
     }
 
     public void deleteBookById(Integer id) {
@@ -68,18 +72,15 @@ public class BookService extends RedisCacheService<Book> {
     }
 
     @Override
-    protected List<Book> getAllFromClient(List<Integer> ids) {
+    protected List<Book> getClientResultFromClient(List<Integer> ids) {
         log.info("Fetching books from DB for Ids : {}", ids);
         return getAllBooksByIds(ids);
     }
 
     @Override
-    public List<Book> getResultByParentIds(List<Integer> ids, String parentFieldName) {
-        log.info("Fetching books from DB for {} Ids : {} ", parentFieldName, ids);
-        if (parentFieldName.equals("authors")) {
-            return getAllBooksByAuthorIds(ids);
-        }
-        return new ArrayList<>();
+    public List<Book> getResultListFromParentIdFromClient(List<Integer> ids) {
+        log.info("Fetching books from DB for {} Ids : {} ", ids);
+        return getAllBooksByAuthorIds(ids);
     }
 
     @Override

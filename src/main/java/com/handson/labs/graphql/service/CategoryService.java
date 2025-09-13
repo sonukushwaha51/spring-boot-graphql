@@ -27,7 +27,8 @@ public class CategoryService extends RedisCacheService<Category> {
         categoryRepository.save(category);
     }
     
-    public Category getCategoryById(Integer id) {
+    @Override
+    public Category getResultByPrimaryIdentifier(int id) {
         return categoryRepository.findById(id).orElse(null);
     }
 
@@ -36,7 +37,9 @@ public class CategoryService extends RedisCacheService<Category> {
     }
 
     public List<Category> getAllCategories() {
-        return (List<Category>) categoryRepository.findAll();
+        List<Category> categories = (List<Category>) categoryRepository.findAll();
+        writeToCache(categories);
+        return categories;
     }
 
     public List<Category> getAllCategories(List<Integer> ids) {
@@ -44,7 +47,7 @@ public class CategoryService extends RedisCacheService<Category> {
     }
 
     @Override
-    protected List<Category> getAllFromClient(List<Integer> ids) {
+    protected List<Category> getClientResultFromClient(List<Integer> ids) {
         log.info("Fetching categories from DB for Ids : {}", ids);
         return getAllCategories(ids);
     }
