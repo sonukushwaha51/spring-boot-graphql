@@ -94,7 +94,7 @@ public abstract class RedisCacheService<T> {
     protected abstract List<T> getAllFromClient(List<Integer> ids);
 
     private T readFromCache(Integer id) {
-        T cachedValue = typeClass.cast(redisTemplate.opsForValue().get(generateKey(libraryCache, id)));
+        T cachedValue = typeClass.cast(redisTemplate.opsForHash().get(libraryCache.getCacheName(), generateKey(libraryCache, id)));
         if (cachedValue != null) {
             log.info("Cache hit for key : {}", generateKey(libraryCache, id));
         }
@@ -103,7 +103,7 @@ public abstract class RedisCacheService<T> {
 
     private void writeToCache(T value, Integer id) {
         log.info("Writing to cache for key : {}, value: {}", getId(value), value);
-        redisTemplate.opsForValue().set(generateKey(libraryCache, id), value, ttl);
+        redisTemplate.opsForHash().put(libraryCache.getCacheName(), generateKey(libraryCache, id), value);
     }
 
     protected abstract Integer getId(T entity);
