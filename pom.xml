@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.handson.labs</groupId>
 	<artifactId>spring-boot-graphql</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>Spring-GraphQL</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
