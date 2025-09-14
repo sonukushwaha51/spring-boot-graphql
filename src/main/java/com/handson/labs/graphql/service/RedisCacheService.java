@@ -90,11 +90,6 @@ public abstract class RedisCacheService<T> {
         redisTemplate.opsForHash().put(libraryCache.getCacheName(), generateKey(libraryCache, id), value);
     }
 
-    protected void writeToCache(LibraryCache cache, T value, Integer id) {
-        log.info("Writing to cache for key : {}, value: {}", generateKey(cache, id), value);
-        redisTemplate.opsForHash().put(cache.getCacheName(), generateKey(cache, id), value);
-    }
-
     protected void writeToCache(List<T> values) {
         for (T t : values) {
             writeToCache(t, getId(t));
@@ -112,21 +107,20 @@ public abstract class RedisCacheService<T> {
     }
 
     public List<T> getResultByParentIds(LibraryCache cache, List<Integer> ids, Class<T> class1) {
-        log.info("Ids in getResultByParentIds: {}", ids);
+        List<T> finalResultList = new ArrayList<>();
         for (int id : ids) {
             List<T> results = readListFromCache(cache, id, class1);
-            if (results != null && !results.isEmpty()) {
-                return results;
+            if (results != null) {
+                 finalResultList.addAll(results);
             } else {
                 results = getResultListFromParentIdFromClient(List.of(id));
-                log.info("Results: {} for id: {}", results, id);
-                if (results != null && !results.isEmpty()) {
+                if (results != null) {
+                    finalResultList.addAll(results);
                     writeListToCache(cache, id, results);
-                    return results;
                 }
             }
         }
-        return new ArrayList<>();
+        return finalResultList;
     }
 
     protected List<T> getResultListFromParentIdFromClient(List<Integer> ids) {
