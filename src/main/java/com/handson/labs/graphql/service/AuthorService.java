@@ -1,5 +1,6 @@
 package com.handson.labs.graphql.service;
 
+import com.handson.labs.graphql.configuration.LibraryCache;
 import com.handson.labs.graphql.entity.Author;
 import com.handson.labs.graphql.entity.upsert.model.AuthorUpdate;
 import com.handson.labs.graphql.repository.AuthorRepository;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +17,11 @@ import java.util.List;
 @Service
 @Slf4j
 @Getter
-public class AuthorService {
+public class AuthorService extends RedisCacheService<Author> {
+
+    public AuthorService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate, LibraryCache.AUTHORS, Author.class);
+    }
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -24,16 +30,20 @@ public class AuthorService {
         return (List<Author>) authorRepository.findAllById(ids);
     }
 
-    public Author getAuthorById(Integer id) {
+    @Override
+    public Author getResultByPrimaryIdentifier(int id) {
         return authorRepository.findById(id).orElse(null);
     }
 
     public List<Author> getAllAuthors() {
-        return (List<Author>) authorRepository.findAll();
+        List<Author> authors = (List<Author>) authorRepository.findAll();
+        writeToCache(authors);
+        return authors;
     }
 
     public void saveAuthor(Author author) {
         authorRepository.save(author);
+        writeToCache(author, author.getId());
     }
 
     public void deleteAuthorById(Integer id) {
@@ -46,6 +56,17 @@ public class AuthorService {
                 .name(authorUpdate.getName())
                 .bio(authorUpdate.getBio())
                 .build();
+    }
+
+    @Override
+    protected List<Author> getClientResultFromClient(List<Integer> ids) {
+        log.info("Fetching authors from DB for Ids : {}", ids);
+        return getAllAuthors(ids);
+    }
+
+    @Override
+    protected Integer getId(Author entity) {
+        return entity.getId();
     }
 
 }
