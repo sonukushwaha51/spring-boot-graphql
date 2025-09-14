@@ -44,3 +44,25 @@
 # Select release version and then
 
 `mvn gitflow:release-finish`
+
+
+# Start redis in local from CLI
+`Install redis server`
+
+`redis-server`
+
+`redis-cli`
+
+# Read from redis
+
+`GET <keyName>`
+
+# Delete all from Redis
+
+`FLUSHALL`
+
+# Read HASH FROM REDIS
+`KEYS *` - Get all keys in HASH
+`TYPE authors` - Get type of hashKey
+`HGETALL authors` - Get all cached values inside a key
+`HGET authors authors_10` - Get cached value of specific key

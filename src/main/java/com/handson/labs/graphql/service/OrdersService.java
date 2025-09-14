@@ -2,24 +2,37 @@ package com.handson.labs.graphql.service;
 
 import java.util.List;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.handson.labs.graphql.configuration.LibraryCache;
 import com.handson.labs.graphql.entity.Orders;
 import com.handson.labs.graphql.entity.upsert.model.OrderUpdate;
 import com.handson.labs.graphql.repository.OrdersRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
-public class OrdersService {
+@Slf4j
+public class OrdersService extends RedisCacheService<Orders> {
+
+    public OrdersService(RedisTemplate<String, Object> redisTemplate) {
+        super(redisTemplate, LibraryCache.ORDERS, Orders.class);
+    }
 
     @Autowired
     OrdersRepository ordersRepository;
 
     public List<Orders> getAllOrders() {
-        return (List<Orders>) ordersRepository.findAll();
+        List<Orders> orders = (List<Orders>) ordersRepository.findAll();
+        writeToCache(orders);
+        return orders;
     }
 
-    public Orders getOrderById(Integer id) {
+    @Override
+    public Orders getResultByPrimaryIdentifier(int id) {
         return ordersRepository.findById(id).orElse(null);
     }
 
@@ -40,6 +53,17 @@ public class OrdersService {
                 .id(orderUpdate.getId())
                 .userId(orderUpdate.getUserId())
                 .build();
+    }
+
+    @Override
+    protected List<Orders> getClientResultFromClient(List<Integer> ids) {
+        log.info("Fetching orders from DB for Ids : {}", ids);
+        return getAllOrdersByIds(ids);
+    }
+
+    @Override
+    protected Integer getId(Orders entity) {
+        return entity.getId();
     }
 
 }

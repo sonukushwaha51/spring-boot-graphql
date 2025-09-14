@@ -10,6 +10,7 @@ import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
+import com.handson.labs.graphql.configuration.LibraryCache;
 import com.handson.labs.graphql.entity.Review;
 import com.handson.labs.graphql.entity.User;
 import com.handson.labs.graphql.service.ReviewService;
@@ -17,6 +18,8 @@ import com.handson.labs.graphql.service.UserService;
 
 @Controller
 public class UserController {
+
+    private final LibraryCache reviewByUserIdCache = LibraryCache.REVIEWS_BY_USER_ID;
 
     @Autowired
     private UserService userService;
@@ -26,13 +29,13 @@ public class UserController {
 
     @SchemaMapping(typeName = "Library", field = "users")
     public List<User> users(@Argument List<Integer> ids) {
-        return userService.getAllUsers(ids);
+        return userService.getClientResults(ids);
     }
 
     @BatchMapping(typeName = "User", field = "reviewsByUserIds")
     public Map<User, List<Review>> reviewsByUsers(List<User> users) {
         List<Integer> userIds = users.stream().map(User::getId).toList();
-        List<Review> reviews = reviewService.getReviewsByUserId(userIds);
+        List<Review> reviews = reviewService.getResultByParentIds(reviewByUserIdCache, userIds, Review.class);
 
         return users.stream()
                 .collect(Collectors.toMap(

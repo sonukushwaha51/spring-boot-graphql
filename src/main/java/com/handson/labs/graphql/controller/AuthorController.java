@@ -1,5 +1,6 @@
 package com.handson.labs.graphql.controller;
 
+import com.handson.labs.graphql.configuration.LibraryCache;
 import com.handson.labs.graphql.entity.Author;
 import com.handson.labs.graphql.entity.Book;
 import com.handson.labs.graphql.entity.upsert.model.AuthorUpdate;
@@ -12,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,6 +26,8 @@ import java.util.stream.Collectors;
 @Controller
 @Slf4j
 public class AuthorController {
+
+    private final LibraryCache booksByAuthorIdCache = LibraryCache.BOOKS_BY_AUTHOR_ID;
 
     @Autowired
     private AuthorService authorService;
@@ -32,21 +37,26 @@ public class AuthorController {
 
     @SchemaMapping(typeName = "Library", field = "authors")
     public List<Author> authors(@Argument List<Integer> ids) {
-        return authorService.getAllAuthors(ids);
+        return new ArrayList<>(authorService.getClientResults(ids));
     }
 
     @BatchMapping(typeName = "Author", field = "books")
     public Map<Author, List<Book>> booksByAuthors(List<Author> authors) {
         List<Integer> ids = authors.stream().map(Author::getId).toList();
-        List<Book> books =  bookService.getAllBooksByAuthorIds(ids);
+        List<Book> books =  bookService.getResultByParentIds(booksByAuthorIdCache, ids, Book.class);
 
         return authors.stream()
                 .collect(Collectors.toMap(
                         author -> author,
                         author -> books.stream()
                                 .filter(book -> book.getAuthorId() == author.getId())
-                                .toList()
+                                .collect(Collectors.toList())
                 ));
+    }
+
+    @QueryMapping
+    public Author authorById(@Argument Integer id) {
+        return authorService.getSingleClientResult(id);
     }
 
     @MutationMapping(name = "updateAuthors")

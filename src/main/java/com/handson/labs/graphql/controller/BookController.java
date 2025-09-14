@@ -30,7 +30,7 @@ public class BookController {
 
     @SchemaMapping(typeName = "Library", field = "books")
     public List<Book> books(@Argument List<Integer> ids) {
-        return bookService.getAllBooksByAuthorIds(ids);
+        return bookService.getClientResults(ids);
     }
 
     @MutationMapping(name = "updateBooks")
