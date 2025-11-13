@@ -8,9 +8,9 @@
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.handson.labs</groupId>
+	<groupId>com.spring.boot.labs</groupId>
 	<artifactId>spring-boot-graphql</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>Spring-GraphQL</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -48,9 +48,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.handson.exercise</groupId>
+			<groupId>com.spring.boot.labs</groupId>
 			<artifactId>graphql-schema</artifactId>
-			<version>1.0.3</version>
+			<version>1.0.4</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
