@@ -1,0 +1,9 @@
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+    - run
+    - domain-mappings
+    - create
+    - --service=springboot-app
+    - --domain=api.example.com
+    - --region=us-central1

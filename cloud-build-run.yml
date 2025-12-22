@@ -1,0 +1,20 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'spring-boot-graphql'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/eighth-saga-474816-a6/dataflow-docker-artifactory/spring-boot-graphql:${_IMAGE_VERSION}'
+      - '--network=default'      # Your VPC name
+      - '--subnet=default'       # Your Subnet name
+      - '--set-env-vars'
+      - 'SPRING_REDIS_PASSWORD=projects/905512589301/secrets/spring-redis-password/versions/1'
+      - 'SPRING_PROFILES_ACTIVE=$_PROFILE'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _IMAGE_VERSION: latest
+  _PROFILE: dev
