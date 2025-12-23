@@ -6,12 +6,12 @@ WORKDIR /app
 
 COPY pom.xml .
 
-RUN mvn dependency:go-offline -B
+RUN mvn dependency:go-offline -B -s settings.xml
 
 # Copy the source code (this layer is invalidated on code changes)
 COPY src ./src
 
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -s settings.xml
 
 COPY target/*.jar graphql.jar
 
