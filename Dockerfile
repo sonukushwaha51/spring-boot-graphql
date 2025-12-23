@@ -5,6 +5,7 @@ ENV ARTIFACT_REGISTRY_TOKEN=${ARTIFACT_REGISTRY_TOKEN}
 WORKDIR /app
 
 COPY pom.xml .
+COPY settings.xml .
 
 RUN mvn dependency:go-offline -B -s settings.xml
 
