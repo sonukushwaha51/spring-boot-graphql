@@ -16,7 +16,8 @@ steps:
     args:
       - '-c'
       - |
-        docker build -t us-central1-docker.pkg.dev/eighth-saga-474816-a6/dataflow-docker-artifactory/spring-boot-graphql:latest .
+        export ARTIFACT_REGISTRY_TOKEN=$(gcloud auth print-access-token)
+        docker build --build-arg ARTIFACT_REGISTRY_TOKEN=$ARTIFACT_REGISTRY_TOKEN -t us-central1-docker.pkg.dev/eighth-saga-474816-a6/dataflow-docker-artifactory/spring-boot-graphql:latest .
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build Versioned image'
@@ -24,7 +25,8 @@ steps:
     args:
       - '-c'
       - |
-        docker build -t us-central1-docker.pkg.dev/eighth-saga-474816-a6/dataflow-docker-artifactory/spring-boot-graphql:$(cat /workspace/version.txt) .
+        export ARTIFACT_REGISTRY_TOKEN=$(gcloud auth print-access-token)
+        docker build --build-arg ARTIFACT_REGISTRY_TOKEN=$ARTIFACT_REGISTRY_TOKEN -t us-central1-docker.pkg.dev/eighth-saga-474816-a6/dataflow-docker-artifactory/spring-boot-graphql:$(cat /workspace/version.txt) .
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Push latest image'
