@@ -7,6 +7,8 @@ WORKDIR /app
 COPY pom.xml .
 COPY settings.xml .
 
+RUN if [ -z "$ARTIFACT_REGISTRY_TOKEN" ]; then echo "TOKEN IS EMPTY"; else echo "TOKEN STARTS WITH: ${ARTIFACT_REGISTRY_TOKEN:0:5}"; fi
+
 RUN mvn dependency:go-offline -B -s settings.xml
 
 # Copy the source code (this layer is invalidated on code changes)
