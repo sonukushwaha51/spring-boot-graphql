@@ -1,6 +1,6 @@
 FROM maven:3.9.6-eclipse-temurin-17 as builder
+
 ARG ARTIFACT_REGISTRY_TOKEN
-# This makes the variable available to Maven
 ENV ARTIFACT_REGISTRY_TOKEN=${ARTIFACT_REGISTRY_TOKEN}
 WORKDIR /app
 
