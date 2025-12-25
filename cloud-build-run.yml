@@ -4,12 +4,18 @@ steps:
       - 'run'
       - 'deploy'
       - 'spring-boot-graphql'
+      - '--region=us-central1'
+      - '--allow-unauthenticated'
       - '--image'
       - 'us-central1-docker.pkg.dev/eighth-saga-474816-a6/dataflow-docker-artifactory/spring-boot-graphql:${_IMAGE_VERSION}'
-      - '--network=default'      # Your VPC name
-      - '--subnet=default'       # Your Subnet name
+      # Networking - Mandatory combo for Direct VPC Egress
+      - '--network=default'
+      - '--subnet=default'
+      - '--vpc-egress=private-ranges-only'
+      # Security - Using the specific secret flag is safer than env-vars
+      - '--set-secrets=SPRING_REDIS_PASSWORD=spring-redis-password:1'
       - '--set-env-vars'
-      - 'SPRING_REDIS_PASSWORD=projects/905512589301/secrets/spring-redis-password/versions/1,SPRING_PROFILES_ACTIVE=$_PROFILE'
+      - 'SPRING_PROFILES_ACTIVE=$_PROFILE'
 
 options:
   logging: CLOUD_LOGGING_ONLY
