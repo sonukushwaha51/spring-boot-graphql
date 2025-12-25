@@ -12,6 +12,10 @@ COPY src ./src
 
 RUN mvn clean package -DskipTests -s settings.xml
 
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
 COPY --from=builder /app/target/*.jar spring-boot-graphql.jar
 
 # Step 4: Expose the port (Cloud Run defaults to 8080)
