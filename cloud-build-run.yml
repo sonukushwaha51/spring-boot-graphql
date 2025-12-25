@@ -9,8 +9,7 @@ steps:
       - '--network=default'      # Your VPC name
       - '--subnet=default'       # Your Subnet name
       - '--set-env-vars'
-      - 'SPRING_REDIS_PASSWORD=projects/905512589301/secrets/spring-redis-password/versions/1'
-      - 'SPRING_PROFILES_ACTIVE=$_PROFILE'
+      - 'SPRING_REDIS_PASSWORD=projects/905512589301/secrets/spring-redis-password/versions/1,SPRING_PROFILES_ACTIVE=$_PROFILE'
 
 options:
   logging: CLOUD_LOGGING_ONLY
