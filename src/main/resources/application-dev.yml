@@ -16,6 +16,7 @@ spring:
   cloud:
     gcp:
       sql:
+        enabled:true
         database-name:library
         instance-connection-name:eighth-saga-474816-a6:us-central1:spring-security
 
