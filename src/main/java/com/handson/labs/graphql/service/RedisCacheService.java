@@ -22,7 +22,7 @@ public abstract class RedisCacheService<T> {
 
     private final Class<T> typeClass;
 
-    @Value("${spring.redis.ttl}")
+    @Value("${spring.data.redis.ttl}")
     private Long ttl;
 
     public RedisCacheService(RedisTemplate<String, Object> redisTemplate, LibraryCache libraryCache, Class<T> typeClass) {
