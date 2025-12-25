@@ -12,7 +12,7 @@ COPY src ./src
 
 RUN mvn clean package -DskipTests -s settings.xml
 
-COPY --from=builder target/*.jar spring-boot-graphql.jar
+COPY --from=builder /app/target/*.jar spring-boot-graphql.jar
 
 # Step 4: Expose the port (Cloud Run defaults to 8080)
 EXPOSE 8080
