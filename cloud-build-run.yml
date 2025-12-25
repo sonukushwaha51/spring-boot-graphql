@@ -14,8 +14,8 @@ steps:
       - '--vpc-egress=private-ranges-only'
       # Security - Using the specific secret flag is safer than env-vars
       - '--set-secrets=SPRING_REDIS_PASSWORD=spring-redis-password:1'
-      - '--set-env-vars'
       - '--add-cloudsql-instances=eighth-saga-474816-a6:us-central1:spring-security'
+      - '--set-env-vars'
       - 'SPRING_PROFILES_ACTIVE=$_PROFILE,SPRING_CLOUD_GCP_SQL_DATABASE_NAME=library,SPRING_CLOUD_GCP_SQL_INSTANCE_CONNECTION_NAME=eighth-saga-474816-a6:us-central1:spring-security'
 options:
   logging: CLOUD_LOGGING_ONLY
