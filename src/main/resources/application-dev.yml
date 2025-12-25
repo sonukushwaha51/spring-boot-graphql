@@ -12,12 +12,12 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host:10.194.131.44
-      password:${SPRING_REDIS_PASSWORD}
+      host: 10.194.131.44
+      password: ${SPRING_REDIS_PASSWORD}
   cloud:
     gcp:
       sql:
-        enabled:true
-        database-name:library
-        instance-connection-name:eighth-saga-474816-a6:us-central1:spring-security
+        enabled: true
+        database-name: library
+        instance-connection-name: eighth-saga-474816-a6:us-central1:spring-security
 

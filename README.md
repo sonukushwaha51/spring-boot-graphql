@@ -5,6 +5,10 @@
 -H "Content-Type: application/json" \
 -d '{"query":"{__schema{types{name}}}"}'`
 
+# Allow access to all users
+
+`gcloud run services add-iam-policy-binding spring-boot-graphql --member="allUsers" --role="roles/run.invoker" --region=us-central1`
+
 # Running query from GraphiQl
 
 `http://localhost:8080/graphiql?path=/graphql`
