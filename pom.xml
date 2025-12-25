@@ -47,12 +47,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.spring.boot.labs</groupId>
-			<artifactId>graphql-schema</artifactId>
-			<version>1.0.4</version>
-			<scope>compile</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.spring.boot.labs</groupId>-->
+<!--			<artifactId>graphql-schema</artifactId>-->
+<!--			<version>1.0.4</version>-->
+<!--			<scope>compile</scope>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>jasypt-spring-boot-starter</artifactId>
@@ -153,13 +153,13 @@
 	</repositories>
 
 	<build>
-		<extensions>
-			<extension>
-				<groupId>com.google.cloud.artifactregistry</groupId>
-				<artifactId>artifactregistry-maven-wagon</artifactId>
-				<version>2.2.5</version>
-			</extension>
-		</extensions>
+<!--		<extensions>-->
+<!--			<extension>-->
+<!--				<groupId>com.google.cloud.artifactregistry</groupId>-->
+<!--				<artifactId>artifactregistry-maven-wagon</artifactId>-->
+<!--				<version>2.2.5</version>-->
+<!--			</extension>-->
+<!--		</extensions>-->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
