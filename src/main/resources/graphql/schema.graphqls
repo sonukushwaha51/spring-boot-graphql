@@ -1,0 +1,116 @@
+type Query {
+    query : Library!
+}
+
+type Library {
+    authors(ids: [Int!]): [Author!]
+    books(ids:[Int!]): [Book!]
+    publishers(ids:[Int!]): [Publisher!]
+    categories(ids:[Int!]): [Category!]
+    users(ids:[Int!]): [User!]
+    reviews(ids:[Int!]): [Review!]
+    orders(ids:[Int!]): [Order!]
+}
+
+type Mutation {
+    updateAuthors(authors : [AuthorUpdate], author: AuthorUpdate) : UpdateResponse!
+    updatePublishers(publisher: PublisherUpdate, publishers: [PublisherUpdate]) : UpdateResponse!
+    updateBooks(books: [BookUpdate], book: BookUpdate) : UpdateResponse!
+    createReview(review : ReviewUpdate) : UpdateResponse!
+    createOrder(order: OrderUpdate) : Order!
+}
+
+type Author {
+    id: ID!
+    name: String!
+    bio: String
+    books: [Book]
+}
+
+type Book {
+    id: ID!
+    title: String!
+    isbn: String!
+    publishedYear: Int
+    author: Author
+    publisher: Publisher
+}
+
+type Publisher {
+    id: ID!
+    name: String!
+    country: String
+    books: [Book]
+}
+
+type Category {
+    id: ID!
+    name: String!
+    description: String
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    reviewsByUserIds: [Review]
+}
+
+type Review {
+    id: ID!
+    rating: Int!
+    comment: String
+    userId: Int!
+    bookId: Int!
+}
+
+type Order {
+    id: ID!
+    user: User!
+    orderDate: String
+}
+
+type UpdateResponse {
+    status : Int!
+    message: String!
+    timestamp: String!
+}
+
+input AuthorUpdate {
+    id: ID!
+    name: String!
+    bio: String
+    book: BookUpdate
+    books: [BookUpdate]
+}
+
+input BookUpdate {
+    id: ID!
+    title: String!
+    isbn: String!
+    publishedYear: Int
+    author: AuthorUpdate
+    publisher: PublisherUpdate
+}
+
+input PublisherUpdate {
+    id: ID!
+    name: String!
+    country: String
+    books: [BookUpdate]
+}
+
+input ReviewUpdate {
+    id: ID!
+    rating: Int!
+    comment: String
+    userId: Int!
+    bookId: Int!
+}
+
+input OrderUpdate {
+    id: ID!
+    userId: Int!
+    books: [BookUpdate]
+    orderDate: String
+}

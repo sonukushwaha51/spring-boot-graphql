@@ -5,6 +5,10 @@
 -H "Content-Type: application/json" \
 -d '{"query":"{__schema{types{name}}}"}'`
 
+# Allow access to all users
+
+`gcloud run services add-iam-policy-binding spring-boot-graphql --member="allUsers" --role="roles/run.invoker" --region=us-central1`
+
 # Running query from GraphiQl
 
 `http://localhost:8080/graphiql?path=/graphql`
@@ -72,3 +76,7 @@ id
 `TYPE authors` - Get type of hashKey
 `HGETALL authors` - Get all cached values inside a key
 `HGET authors authors_10` - Get cached value of specific key
+
+# Create Redis Instance
+
+`gcloud redis instances create --project=eighth-saga-474816-a6  graphql-instance --tier=standard --size=16 --region=us-central1 --redis-version=redis_7_2 --network=projects/eighth-saga-474816-a6/global/networks/default --connect-mode=DIRECT_PEERING --display-name="GraphQL instance"`

@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: sonukush
+    password: ENC(vu2yFSSBWQBxpXkyU+Y4tsyk6xTy6rxE)
+  jpa:
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+  data:
+    redis:
+      host: 10.194.131.44
+      password: ${SPRING_REDIS_PASSWORD}
+  cloud:
+    gcp:
+      sql:
+        enabled: true
+        database-name: library
+        instance-connection-name: eighth-saga-474816-a6:us-central1:spring-security
+
