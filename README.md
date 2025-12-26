@@ -10,13 +10,19 @@
 `http://localhost:8080/graphiql?path=/graphql`
 
 `query MyQuery {
-    query {
-        authors(ids: [1]) {
-            bio
-            id
-            name
-        }
-    }
+query {
+authors(ids: 10) {
+bio
+books {
+id
+publishedYear
+isbn
+title
+}
+name
+id
+}
+}
 }`
 
 `mutation MyMutation {
