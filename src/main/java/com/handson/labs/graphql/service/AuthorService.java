@@ -5,6 +5,7 @@ import com.handson.labs.graphql.entity.Author;
 import com.handson.labs.graphql.entity.upsert.model.AuthorUpdate;
 import com.handson.labs.graphql.repository.AuthorRepository;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -35,11 +37,18 @@ public class AuthorService extends RedisCacheService<Author> {
         return authorRepository.findById(id).orElse(null);
     }
 
+    //@CircuitBreaker(name = "authorService", fallbackMethod = "getAllAuthorsFallBack")
     public List<Author> getAllAuthors() {
         List<Author> authors = (List<Author>) authorRepository.findAll();
         writeToCache(authors);
         return authors;
     }
+
+    // Must pass exception as parameter and return type should be same
+//    public List<Author> getAllAuthorsFallBack(Exception exception) {
+//        log.error("Author Service is not available", exception);
+//        return Collections.emptyList();
+//    }
 
     public void saveAuthor(Author author) {
         authorRepository.save(author);

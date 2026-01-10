@@ -1,0 +1,29 @@
+resilience4j:
+  circuitbreaker:
+    instances:
+      authorService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: COUNT_BASED
+        minimumNumberOfCalls: 5
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+  retry:
+    instances:
+      authorService:
+        maxAttempts: 3
+        waitDuration: 2s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        retryExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+  ratelimiter:
+    instances:
+      authorService:
+        limitForPeriod: 1 #The number of permissions available in one cycle (e.g., 1 requests).
+        limitRefreshPeriod: 1s #How often the permissions reset (e.g., 1s means 1 requests per second).
+        timeoutDuration: 0 #How long a thread should "park" and wait for a permit if the limit is reached. Set to 0 to fail immediately.
+        registerHealthIndicator: true
