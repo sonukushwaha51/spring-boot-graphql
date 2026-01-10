@@ -5,6 +5,7 @@ import com.handson.labs.graphql.service.AuthorService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,12 +29,14 @@ public class AuthorRestController {
     // Should use generic return type when using circuit breaker
     @CircuitBreaker(name = "authorService", fallbackMethod = "authorsFallback")
     @RateLimiter(name = "authorService", fallbackMethod = "rateLimitFallback")
+    @Retry(name = "authorService")
     public ResponseEntity<?> getAllAuthors() {
         return new ResponseEntity<>(authorService.getAllAuthors(), HttpStatus.OK);
     }
 
     @GetMapping("/get-author/{id}")
     @CircuitBreaker(name = "authorService", fallbackMethod = "authorsFallback")
+    @Retry(name = "authorService")
     @RateLimiter(name = "authorService", fallbackMethod = "rateLimitFallback")
     public ResponseEntity<?> getAllAuthorById(@PathVariable("id") int id) {
         return new ResponseEntity<>(authorService.getResultByPrimaryIdentifier(id), HttpStatus.OK);
