@@ -1,9 +1,7 @@
 package com.handson.labs.graphql.service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -104,6 +102,7 @@ public abstract class RedisCacheService<T> {
     protected <T> void writeListToCache(LibraryCache cache, int id, List<T> entityList) {
         log.info("Writing list to cache for id: {}, value: {}", generateKey(cache, id), entityList);
         redisTemplate.opsForHash().put(cache.getCacheName(), generateKey(cache, id), entityList);
+        redisTemplate.expire(generateKey(cache, id), ttl, TimeUnit.SECONDS);
     }
 
     public List<T> getResultByParentIds(LibraryCache cache, List<Integer> ids, Class<T> class1) {
