@@ -21,12 +21,12 @@ import java.util.List;
 @Getter
 public class AuthorService extends RedisCacheService<Author> {
 
-    public AuthorService(RedisTemplate<String, Object> redisTemplate) {
-        super(redisTemplate, LibraryCache.AUTHORS, Author.class);
-    }
+    private final AuthorRepository authorRepository;
 
-    @Autowired
-    private AuthorRepository authorRepository;
+    public AuthorService(RedisTemplate<String, Object> redisTemplate, AuthorRepository authorRepository) {
+        super(redisTemplate, LibraryCache.AUTHORS, Author.class);
+        this.authorRepository = authorRepository;
+    }
 
     public List<Author> getAllAuthors(List<Integer> ids) {
         return (List<Author>) authorRepository.findAllById(ids);
